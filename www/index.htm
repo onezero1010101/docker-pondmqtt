@@ -12,7 +12,7 @@
 
 function sub_mqtt_msg() {
 // Send an MQTT message
-  var mqtt_server = '208.86.63.2';  // change to your duckdns url
+  var mqtt_server = 'mqtt-url';  // change to your duckdns url
   var mqtt_port = 8185;            // change to port forwarded port for mqtt websockets default 8000
 
   client = new Paho.MQTT.Client(mqtt_server, mqtt_port,"");
