@@ -1,0 +1,47 @@
+<html>
+<head>
+<title> MQTT Websocket Test</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+<script>
+
+function sub_mqtt_msg() {
+// Send an MQTT message
+  var mqtt_server = 'clumsy.lan';  // change to your duckdns url
+  var mqtt_port = 8185;            // change to port forwarded port for mqtt websockets default 8000
+
+  client = new Paho.MQTT.Client(mqtt_server, mqtt_port,"");
+  client.onMessageArrived = onMessageArrived;
+  //client.onMessageArrived = onMessageArrived;
+  client.connect({onSuccess:onConnect});
+  document.getElementById("submsg").innerHTML = "Trying to connect... "+mqtt_server+":"+mqtt_port;
+
+}
+function onConnect() {
+  document.getElementById("submsg").innerHTML = "New connection made...";
+  var mqtt_destname = "temp";
+
+  //var mqtt_destname = document.getElementById("mqtt_destname").value;  
+  client.subscribe(mqtt_destname);
+  document.getElementById("submsg").innerHTML = "Subscribing to topic: " + mqtt_destname + " ...";
+}
+function onMessageArrived(message) {
+  var result = message.payloadString + "&#8457;";
+  document.getElementById("submsg").innerHTML = result;
+}
+
+</script>
+<body onload="sub_mqtt_msg()">
+<h1>MQTT Pond Temp</h1>
+<!--
+Server Name: <input type="text" id="mqtt_server" value=mqtt_server><br><br>
+Websocket: <input type="text" id="mqtt_port" value="8185"><br><br>
+DestinationName: <input type="text" id="mqtt_destname" value="temp"><br><br>
+
+<button onclick="sub_mqtt_msg()">Subscript to MQTT</button>
+-->
+
+<h3>Current Temp: <div id=submsg></div></h3>
+</body>
+
+</html>

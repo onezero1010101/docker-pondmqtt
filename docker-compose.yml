@@ -1,0 +1,37 @@
+version: '2.0'
+services:
+  mqttweb:
+    image: nginx
+    container_name: mqttweb
+    ports:
+      - '8186:80'
+    volumes:
+      - './www:/usr/share/nginx/html:ro'
+  mqtt:
+    container_name: mqtt
+    image: eclipse-mosquitto
+    volumes:
+      - ./mqtt:/mosquitto
+    ports:
+      - 1884:1883 #mqtt
+      - 8185:8000 #websockets
+#      - 9002:9001
+
+
+#  cloud9:
+#    image: ghcr.io/linuxserver/cloud9
+#    container_name: mqttwebcloud9
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=America/Indiana/Indianapolis
+#      - GITURL=https://github.com/linuxserver/docker-cloud9.git #optional
+
+#      - USERNAME= #optional
+#      - PASSWORD= #optional
+#    volumes:
+#      - ./www:/code #optional
+#      - /var/run/docker.sock:/var/run/docker.sock #optional
+#    ports:
+#      - 8187:8000
+
